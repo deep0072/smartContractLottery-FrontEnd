@@ -1,0 +1,2 @@
+dependencies we install using yarn should be in dependcies key in package.json. because we are creating website for this. 
+devDependcies values  wont be consider during deployment of website
