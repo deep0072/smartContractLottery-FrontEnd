@@ -10,7 +10,7 @@ import {useMoralis} from "react-moralis" // to use moralis we need to wrapped it
 import {useEffect} from "react"
 
 export default function ManualHeader (){
-    const {enableWeb3,account, isWeb3Enabled,Moralis, deactivateWeb3} = useMoralis() // useMoralis() is hook used to change the state of variable and re render this change to front end
+    const {enableWeb3,account, isWeb3Enabled,Moralis, deactivateWeb3,isWeb3EnableLoading} = useMoralis() // useMoralis() is hook used to change the state of variable and re render this change to front end
     // enableWeb3 ==> function to connect the wallet
 
 
@@ -80,8 +80,17 @@ export default function ManualHeader (){
                                 }
                 
                 
-                }}>connect wallet</button>
+                }}
+                
+                disabled = {isWeb3EnableLoading} // this will disable the connect button during connection of wallet
+                >
+                    
+                connect wallet
+                </button>
+                
             )}
+
+            {console.log(isWeb3Enabled,"web3enabled")}
         </div>
         
     )
