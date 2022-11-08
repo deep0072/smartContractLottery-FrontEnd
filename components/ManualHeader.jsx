@@ -10,10 +10,28 @@ import {useMoralis} from "react-moralis" // to use moralis we need to wrapped it
 import {useEffect} from "react"
 
 export default function ManualHeader (){
-    const {enableWeb3,account, isWeb3Enabled} = useMoralis() // useMoralis() is hook used to change the state of variable and re render this change to front end
+    const {enableWeb3,account, isWeb3Enabled,Moralis, deactivateWeb3} = useMoralis() // useMoralis() is hook used to change the state of variable and re render this change to front end
     // enableWeb3 ==> function to connect the wallet
 
 
+
+    // this hook will clean the local storage after disconnecting account from metamask wallet
+    // after disconnecting account whenver we refresh the page metmask wont pop up everytime
+    useEffect(()=>{
+        Moralis.onAccountChanged((account)=>{
+            console.log(`account changes to ${account}`)
+
+            if (account == null){ // when we 
+                window.localStorage.removeItem("connected")
+                deactivateWeb3() // this will set web3Enable to false
+            }
+
+        })
+
+        
+
+    })
+    
     /*now after connecting to wallet when we refresh the site then browser forgot 
 
      that last status wallet connection status is true or false. so we have to click on button for connection
@@ -25,8 +43,11 @@ export default function ManualHeader (){
      if we keep array blank then it will run only one time. other it will run every time whenver page refresh
 
     */
-
      useEffect(()=>{
+    
+        
+
+        
         if (isWeb3Enabled) return // if web#enable true then return
         
 
