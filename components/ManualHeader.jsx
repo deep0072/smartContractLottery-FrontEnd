@@ -71,8 +71,6 @@ export default function ManualHeader() {
                     connect wallet
                 </button>
             )}
-
-            {console.log(isWeb3Enabled, "web3enabled")}
         </div>
     )
 }
