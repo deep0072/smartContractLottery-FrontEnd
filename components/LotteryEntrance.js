@@ -19,7 +19,7 @@ export default function LotteryEntrace() {
 
     const [entranceFee, setEntranceFee] = useState("0") // it will set entrance fee value
     const [recentWinner, setrecentWinner] = useState("0") // it will set entrance fee value
-    // it will set entrance fee value
+    const [numberOfPlayers, setnumPlayer] = useState("0")
 
     const dispatch = useNotification() // dispatch gives us  little pop up of notification
     const { runContractFunction: enterRaffle } = useWeb3Contract({
@@ -46,13 +46,22 @@ export default function LotteryEntrace() {
         functionName: "getRecentWinner", //,
         params: {},
     })
+    const { runContractFunction: getNumberOfplayer } = useWeb3Contract({
+        // it will get the entrance fee from deployed contract
+        abi: abi,
+        contractAddress: raffleAddress,
+        functionName: "getNumberOfplayer", //,
+        params: {},
+    })
 
     async function updateUi() {
         const entranceFeeFromcall = (await getEntranceFee()).toString()
         setEntranceFee(entranceFeeFromcall)
-        const recentWinner = await getRecentWinner()
-        console.log(recentWinner, "recentWinner")
-        setrecentWinner(recentWinner)
+        const recentWinnerFromCall = await getRecentWinner()
+        console.log(recentWinnerFromCall, "recentWinner")
+        setrecentWinner(recentWinnerFromCall)
+        const numberOfPlayersFromCall = (await getNumberOfplayer()).toString()
+        setnumPlayer(numberOfPlayersFromCall)
     }
 
     // this use effect get the entrance fee whenenver wallet connect
@@ -98,6 +107,7 @@ export default function LotteryEntrace() {
                     </button>
                     Lottery entrance Fee is:{ethers.utils.formatUnits(entranceFee, "ether")}
                     <br />
+                    NUMBER OF PLAYER : {numberOfPlayers}
                     recentWinner : {recentWinner}
                 </div>
             ) : (
