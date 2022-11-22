@@ -10,7 +10,7 @@ import { useNotification } from "web3uikit"
 console.log(contractAddresses)
 
 export default function LotteryEntrace() {
-    const { chainId: chainIdhex, isWeb3Enabled } = useMoralis() // with help of moralis hook we are getting chain id on network switch
+    const { chainId: chainIdhex, isWeb3Enabled, isLoading, isFetching } = useMoralis() // with help of moralis hook we are getting chain id on network switch
     const chainId = parseInt(chainIdhex) // parsing chainId into int format
     console.log(chainId in contractAddresses)
 
@@ -94,6 +94,7 @@ export default function LotteryEntrace() {
             {raffleAddress ? (
                 <div>
                     <button
+                        className="bg-red-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                         onClick={async function () {
                             await enterRaffle({
                                 onSuccess: handleSuccess,
@@ -102,8 +103,13 @@ export default function LotteryEntrace() {
                                 },
                             })
                         }}
+                        disabled={isLoading || isFetching}
                     >
-                        enter Raffle
+                        {isLoading || isFetching ? (
+                            <div className="animate-spin spinner-border h-8 w-8 border-b-2 rounded-full"></div>
+                        ) : (
+                            <div>Enter Raffle</div>
+                        )}
                     </button>
                     Lottery entrance Fee is:{ethers.utils.formatUnits(entranceFee, "ether")}
                     <br />

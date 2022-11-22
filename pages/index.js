@@ -11,7 +11,7 @@ export default function Home() {
             <Head>
                 <title>Lottery App</title>
                 <meta name="description" content="Smart contract Lottery app" />
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" href   ="/favicon.ico" />
             </Head>
 
             <Header />
